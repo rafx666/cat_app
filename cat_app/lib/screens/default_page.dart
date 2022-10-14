@@ -1,11 +1,14 @@
 import 'package:cat_app/appbar/cat_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({
+class DefaultPage extends StatelessWidget {
+  const DefaultPage({
     Key? key,
+    required this.user,
   }) : super(key: key);
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,9 @@ class LoginPage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text('logowanie'),
+            children: [
+              const Text('strona startowa'),
+              Text('Jesteś zalogowany jako ${user.email}')
             ],
           ),
         ),
