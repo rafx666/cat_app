@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:cat_app/appbar/cat_bar.dart';
+import 'package:cat_app/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,6 +85,9 @@ class _LoginPageState extends State<LoginPage> {
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
                           email: widget.emailController.text,
                           password: widget.passwordController.text);
+                      if (!mounted) return;
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const HomePage()));
                     } catch (error) {
                       setState(() {
                         errorMessage = 'Niepoprawny e-mail lub hasło';

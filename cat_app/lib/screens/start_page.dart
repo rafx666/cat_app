@@ -3,11 +3,17 @@ import 'package:cat_app/login/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class StartPage extends StatelessWidget {
+class StartPage extends StatefulWidget {
   const StartPage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<StartPage> createState() => _StartPageState();
+}
+
+class _StartPageState extends State<StartPage> {
+  var isCreatingAccount = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,8 +168,11 @@ class StartPage extends StatelessWidget {
                     ],
                   ),
                   onPressed: () {
+                    setState(() {
+                      isCreatingAccount = true;
+                    });
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const SignInPage(),
+                      builder: (_) => SignInPage(),
                     ));
                   },
                 ),

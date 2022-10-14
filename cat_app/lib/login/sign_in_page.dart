@@ -1,14 +1,25 @@
 // ignore_for_file: unused_import
 
 import 'package:cat_app/appbar/cat_bar.dart';
+import 'package:cat_app/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignInPage extends StatelessWidget {
-  const SignInPage({
+class SignInPage extends StatefulWidget {
+  SignInPage({
     Key? key,
   }) : super(key: key);
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  var errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +51,9 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  controller: widget.emailController,
+                  decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       hintText: 'E-mail'),
@@ -49,13 +61,46 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const TextField(
+                TextField(
+                  controller: widget.passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       filled: true, fillColor: Colors.white, hintText: 'Hasło'),
                 ),
                 const SizedBox(
-                  height: 110,
+                  height: 7,
+                ),
+                Text(
+                  errorMessage,
+                  style: const TextStyle(fontSize: 17, color: Colors.black),
+                ),
+                const SizedBox(
+                  height: 7,
+                ),
+                ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.brown),
+                  onPressed: () async {
+                    try {
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: widget.emailController.text,
+                              password: widget.passwordController.text);
+                      if (!mounted) return;
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const HomePage()));
+                    } catch (error) {
+                      setState(() {
+                        errorMessage = 'Niepoprawny e-mail';
+                      });
+                    }
+                  },
+                  child: const Text(
+                    'Utwórz konto',
+                  ),
+                ),
+                const SizedBox(
+                  height: 100,
                 ),
               ],
             ),

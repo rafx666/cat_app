@@ -29,7 +29,18 @@ class DefaultPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('strona startowa'),
-              Text('Jesteś zalogowany jako ${user.email}')
+              Text('Jesteś zalogowany jako ${user.email}'),
+              const SizedBox(
+                height: 25,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                },
+                child: const Text(
+                  'Wyloguj',
+                ),
+              ),
             ],
           ),
         ),
