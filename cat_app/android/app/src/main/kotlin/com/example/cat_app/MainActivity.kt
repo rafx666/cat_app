@@ -1,4 +1,4 @@
-package com.example.cat_app
+package com.rafalpieczyk.cat_app
 
 import io.flutter.embedding.android.FlutterActivity
 

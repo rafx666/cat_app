@@ -1,5 +1,6 @@
 import 'package:cat_app/appbar/cat_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({
@@ -22,8 +23,10 @@ class LoginPage extends StatelessWidget {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('logowanie'),
+            ],
           ),
         ),
       ),
