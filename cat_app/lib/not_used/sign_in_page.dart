@@ -1,13 +1,13 @@
 // ignore_for_file: unused_import
 
 import 'package:cat_app/appbar/cat_bar.dart';
-import 'package:cat_app/screens/home_page.dart';
+import 'package:cat_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({
+class SignInPage extends StatefulWidget {
+  SignInPage({
     Key? key,
   }) : super(key: key);
 
@@ -15,10 +15,10 @@ class LoginPage extends StatefulWidget {
   final passwordController = TextEditingController();
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignInPageState extends State<SignInPage> {
   var errorMessage = '';
 
   @override
@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Zaloguj się',
+                  'Zarejestruj się',
                   style: GoogleFonts.poppins(
                     fontSize: 35,
                     color: Colors.white,
@@ -82,20 +82,21 @@ class _LoginPageState extends State<LoginPage> {
                       ElevatedButton.styleFrom(backgroundColor: Colors.brown),
                   onPressed: () async {
                     try {
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: widget.emailController.text,
-                          password: widget.passwordController.text);
+                      await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                              email: widget.emailController.text,
+                              password: widget.passwordController.text);
                       if (!mounted) return;
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (_) => const HomePage()));
                     } catch (error) {
                       setState(() {
-                        errorMessage = 'Niepoprawny e-mail lub hasło';
+                        errorMessage = 'Niepoprawny e-mail';
                       });
                     }
                   },
                   child: const Text(
-                    'Zaloguj',
+                    'Utwórz konto',
                   ),
                 ),
                 const SizedBox(

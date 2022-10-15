@@ -1,5 +1,5 @@
-import 'package:cat_app/login/login_page.dart';
-import 'package:cat_app/login/sign_in_page.dart';
+import 'package:cat_app/not_used/login_page.dart';
+import 'package:cat_app/not_used/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
