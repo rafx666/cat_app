@@ -9,6 +9,42 @@
       "client_info": {
         "mobilesdk_app_id": "1:378692841823:android:ccb435421e7d48fc7f86ea",
         "android_client_info": {
+          "package_name": "com.example.cat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378692841823-a8i1qj2vd13omsu20o1vdvshi2ar97c6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPu1o2FBNwG3Wcttwa2htzygLErNLsYJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378692841823-a8i1qj2vd13omsu20o1vdvshi2ar97c6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "378692841823-ssru6nr4foib8raovu19g6mgoija6n85.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.catApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378692841823:android:db24166e047f2fb47f86ea",
+        "android_client_info": {
           "package_name": "com.rafalpieczyk.cat_app"
         }
       },
@@ -29,6 +65,13 @@
             {
               "client_id": "378692841823-a8i1qj2vd13omsu20o1vdvshi2ar97c6.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "378692841823-ssru6nr4foib8raovu19g6mgoija6n85.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.catApp"
+              }
             }
           ]
         }

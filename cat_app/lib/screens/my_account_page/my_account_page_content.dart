@@ -29,6 +29,9 @@ class MyAccountPageContent extends StatelessWidget {
               height: 25,
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.brown,
+              ),
               onPressed: () {
                 FirebaseAuth.instance.signOut();
               },

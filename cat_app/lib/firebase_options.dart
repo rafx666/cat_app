@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCPu1o2FBNwG3Wcttwa2htzygLErNLsYJs',
-    appId: '1:378692841823:android:ccb435421e7d48fc7f86ea',
+    appId: '1:378692841823:android:db24166e047f2fb47f86ea',
     messagingSenderId: '378692841823',
     projectId: 'catapp123',
     storageBucket: 'catapp123.appspot.com',
@@ -59,12 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCDUD4yM7pnfeBK-aJWFnYW2TmGXyS2tEU',
-    appId: '1:378692841823:ios:e1f206da69d5390b7f86ea',
+    appId: '1:378692841823:ios:7a5c3cb7254160977f86ea',
     messagingSenderId: '378692841823',
     projectId: 'catapp123',
     storageBucket: 'catapp123.appspot.com',
-    iosClientId:
-        '378692841823-ssru6nr4foib8raovu19g6mgoija6n85.apps.googleusercontent.com',
+    iosClientId: '378692841823-3l28s2oj43aa63lnmk7pu57fp45pps2h.apps.googleusercontent.com',
     iosBundleId: 'com.rafalpieczyk.catApp',
   );
 }
