@@ -56,74 +56,83 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
           child: ListView(
             children: [
               for (final document in documents) ...[
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.brown),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                Dismissible(
+                  key: ValueKey(document.id),
+                  onDismissed: (_) {
+                    FirebaseFirestore.instance
+                        .collection("cat_info")
+                        .doc(document.id)
+                        .delete();
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.brown),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                document['cat_name'],
+                                style: const TextStyle(
+                                    fontSize: 22, color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          if (document['age'].toString().isEmpty == false)
                             Text(
-                              document['cat_name'],
+                              'Wiek: ${document['age']}',
                               style: const TextStyle(
-                                  fontSize: 22, color: Colors.white),
+                                  fontSize: 16, color: Colors.white),
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        if (document['age'].toString().isEmpty == false)
-                          Text(
-                            'Wiek: ${document['age']}',
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.white),
-                          ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        if (document['cat_food'].toString().isEmpty == false)
-                          Text(
-                            'Co jadł: ${document['cat_food']}',
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.white),
-                          ),
-                        if (document['cat_food'].toString().isEmpty == false)
                           const SizedBox(
                             height: 5,
                           ),
-                        if (document['vet'].toString().isEmpty == false)
+                          if (document['cat_food'].toString().isEmpty == false)
+                            Text(
+                              'Co jadł: ${document['cat_food']}',
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ),
+                          if (document['cat_food'].toString().isEmpty == false)
+                            const SizedBox(
+                              height: 5,
+                            ),
+                          if (document['vet'].toString().isEmpty == false)
+                            Text(
+                              'Wet: ${document['vet']}',
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ),
+                          if (document['vet'].toString().isEmpty == false)
+                            const SizedBox(
+                              height: 5,
+                            ),
+                          if (document['others'].toString().isEmpty == false)
+                            Text(
+                              'Uwagi: ${document['others']}',
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ),
+                          if (document['others'].toString().isEmpty == false)
+                            const SizedBox(
+                              height: 5,
+                            ),
                           Text(
-                            'Wet: ${document['vet']}',
+                            'Data: ${document['data']}',
                             style: const TextStyle(
                                 fontSize: 16, color: Colors.white),
                           ),
-                        if (document['vet'].toString().isEmpty == false)
-                          const SizedBox(
-                            height: 5,
-                          ),
-                        if (document['others'].toString().isEmpty == false)
-                          Text(
-                            'Uwagi: ${document['others']}',
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.white),
-                          ),
-                        if (document['others'].toString().isEmpty == false)
-                          const SizedBox(
-                            height: 5,
-                          ),
-                        Text(
-                          'Data: ${document['data']}',
-                          style: const TextStyle(
-                              fontSize: 16, color: Colors.white),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
