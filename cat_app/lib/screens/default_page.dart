@@ -31,7 +31,11 @@ class _DefaultPageState extends State<DefaultPage> {
           return const MyCatPageContent();
         }
         if (currentIndex == 1) {
-          return const AddInfoPageContent();
+          return AddInfoPageContent(onSave: () {
+            setState(() {
+              currentIndex = 0;
+            });
+          });
         }
         return MyAccountPageContent(widget: widget);
       }),

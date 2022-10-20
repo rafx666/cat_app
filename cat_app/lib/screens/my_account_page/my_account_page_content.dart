@@ -23,10 +23,21 @@ class MyAccountPageContent extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('strona startowa'),
-            Text('Jesteś zalogowany jako ${widget.user.email}'),
+            Container(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.brown, borderRadius: BorderRadius.circular(10)),
+              child: Text(
+                'Jesteś zalogowany jako ${widget.user.email}',
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+            ),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
