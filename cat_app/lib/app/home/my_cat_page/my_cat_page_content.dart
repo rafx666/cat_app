@@ -1,5 +1,7 @@
+import 'package:cat_app/app/home/my_cat_page/cubit/my_cat_page_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyCatPageContent extends StatefulWidget {
   const MyCatPageContent({
@@ -11,24 +13,19 @@ class MyCatPageContent extends StatefulWidget {
 }
 
 class _MyCatPageContentState extends State<MyCatPageContent> {
-  final scaf = 2;
-
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      stream: FirebaseFirestore.instance
-          .collection('cat_info')
-          .orderBy('data', descending: true)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Center(child: Text('Something went wrong'));
-        }
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: Text('Waiting for data'));
-        }
-        final documents = snapshot.data!.docs;
-        if (scaf == 1) {
+    return BlocProvider(
+      create: (context) => MyCatPageCubit()..start(),
+      child: BlocBuilder<MyCatPageCubit, MyCatPageState>(
+        builder: (context, state) {
+          if (state.errorMessage.isNotEmpty) {
+            return Center(
+                child: Text('Something went wrong: ${state.errorMessage}'));
+          }
+          if (state.isLoading == true) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -36,111 +33,98 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text('mój kot'),
-                ],
-              ),
-            ),
-          );
-        }
-        return Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("images/back1.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: ListView(
-            children: [
-              for (final document in documents) ...[
-                Dismissible(
-                  key: ValueKey(document.id),
-                  onDismissed: (_) {
-                    FirebaseFirestore.instance
-                        .collection("cat_info")
-                        .doc(document.id)
-                        .delete();
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.brown),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+            child: ListView(
+              children: [
+                for (final document in state.documents) ...[
+                  Dismissible(
+                    key: ValueKey(document.id),
+                    onDismissed: (_) {
+                      FirebaseFirestore.instance
+                          .collection("cat_info")
+                          .doc(document.id)
+                          .delete();
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.brown),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  document['cat_name'],
+                                  style: const TextStyle(
+                                      fontSize: 22, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            if (document['age'].toString().isEmpty == false)
                               Text(
-                                document['cat_name'],
+                                'Wiek: ${document['age']}',
                                 style: const TextStyle(
-                                    fontSize: 22, color: Colors.white),
+                                    fontSize: 16, color: Colors.white),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          if (document['age'].toString().isEmpty == false)
+                            if (document['age'].toString().isEmpty == false)
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            if (document['cat_food'].toString().isEmpty ==
+                                false)
+                              Text(
+                                'Co jadł: ${document['cat_food']}',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              ),
+                            if (document['cat_food'].toString().isEmpty ==
+                                false)
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            if (document['vet'].toString().isEmpty == false)
+                              Text(
+                                'Wet: ${document['vet']}',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              ),
+                            if (document['vet'].toString().isEmpty == false)
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            if (document['others'].toString().isEmpty == false)
+                              Text(
+                                'Uwagi: ${document['others']}',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              ),
+                            if (document['others'].toString().isEmpty == false)
+                              const SizedBox(
+                                height: 5,
+                              ),
                             Text(
-                              'Wiek: ${document['age']}',
+                              'Data: ${document['data']}',
                               style: const TextStyle(
                                   fontSize: 16, color: Colors.white),
                             ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          if (document['cat_food'].toString().isEmpty == false)
-                            Text(
-                              'Co jadł: ${document['cat_food']}',
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white),
-                            ),
-                          if (document['cat_food'].toString().isEmpty == false)
-                            const SizedBox(
-                              height: 5,
-                            ),
-                          if (document['vet'].toString().isEmpty == false)
-                            Text(
-                              'Wet: ${document['vet']}',
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white),
-                            ),
-                          if (document['vet'].toString().isEmpty == false)
-                            const SizedBox(
-                              height: 5,
-                            ),
-                          if (document['others'].toString().isEmpty == false)
-                            Text(
-                              'Uwagi: ${document['others']}',
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white),
-                            ),
-                          if (document['others'].toString().isEmpty == false)
-                            const SizedBox(
-                              height: 5,
-                            ),
-                          Text(
-                            'Data: ${document['data']}',
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.white),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
-          ),
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }
