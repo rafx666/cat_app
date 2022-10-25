@@ -1,7 +1,7 @@
-import 'package:cat_app/appbar/cat_bar.dart';
-import 'package:cat_app/screens/add_info_page/add_info_page_content.dart';
-import 'package:cat_app/screens/my_account_page/my_account_page_content.dart';
-import 'package:cat_app/screens/my_cat_page/my_cat_page_content.dart';
+import 'package:cat_app/app/appbar/cat_bar.dart';
+import 'package:cat_app/app/home/add_info_page/add_info_page_content.dart';
+import 'package:cat_app/app/home/my_account_page/my_account_page_content.dart';
+import 'package:cat_app/app/home/my_cat_page/my_cat_page_content.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

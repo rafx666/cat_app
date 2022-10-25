@@ -3,18 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FirstPage extends StatefulWidget {
-  FirstPage({
+class LoginPage extends StatefulWidget {
+  LoginPage({
     Key? key,
   }) : super(key: key);
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
-  State<FirstPage> createState() => _FirstPageState();
+  State<LoginPage> createState() => _FirstPageState();
 }
 
-class _FirstPageState extends State<FirstPage> {
+class _FirstPageState extends State<LoginPage> {
   var isCreatingAccount = false;
   var errorMessage = '';
   @override

@@ -1,4 +1,4 @@
-import 'package:cat_app/screens/default_page.dart';
+import 'package:cat_app/app/home/default_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
