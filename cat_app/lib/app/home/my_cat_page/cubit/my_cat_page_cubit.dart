@@ -15,10 +15,15 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
             documents: [],
             isLoading: false,
             errorMessage: '',
+            collection1: null,
           ),
         );
 
   StreamSubscription? _streamSubscription;
+
+  Future<void> delete(documentID) async {
+    FirebaseFirestore.instance.collection("cat_info").doc(documentID).delete();
+  }
 
   Future<void> start() async {
     emit(
@@ -26,8 +31,10 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
         documents: [],
         isLoading: true,
         errorMessage: '',
+        collection1: null,
       ),
     );
+
     _streamSubscription = FirebaseFirestore.instance
         .collection('cat_info')
         .orderBy('data', descending: true)
@@ -37,6 +44,7 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
         documents: data.docs,
         isLoading: false,
         errorMessage: '',
+        collection1: null,
       ));
     })
       ..onError((error) {
@@ -44,6 +52,7 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
           documents: const [],
           isLoading: false,
           errorMessage: error.toString(),
+          collection1: null,
         ));
       });
   }

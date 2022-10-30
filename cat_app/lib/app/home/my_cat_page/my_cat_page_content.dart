@@ -1,6 +1,5 @@
 import 'package:cat_app/app/home/my_cat_page/cubit/my_cat_page_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyCatPageContent extends StatefulWidget {
@@ -39,10 +38,7 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
                   Dismissible(
                     key: ValueKey(document.id),
                     onDismissed: (_) {
-                      FirebaseFirestore.instance
-                          .collection("cat_info")
-                          .doc(document.id)
-                          .delete();
+                      context.read<MyCatPageCubit>().delete(document.id);
                     },
                     child: Container(
                       margin: const EdgeInsets.all(10),
