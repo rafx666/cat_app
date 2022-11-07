@@ -37,7 +37,25 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
                 for (final document in state.documents) ...[
                   Dismissible(
                     key: ValueKey(document.id),
-                    onDismissed: (_) {
+                    background: const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 32.0),
+                          child: Icon(
+                            Icons.delete,
+                          ),
+                        ),
+                      ),
+                    ),
+                    confirmDismiss: (direction) async {
+                      // only from right to left
+                      return direction == DismissDirection.endToStart;
+                    },
+                    onDismissed: (direction) {
                       context.read<MyCatPageCubit>().delete(document.id);
                     },
                     child: Container(

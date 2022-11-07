@@ -19,7 +19,7 @@ class _AddInfoPageContentState extends State<AddInfoPageContent> {
   var vet = '';
   var age = '';
   var others = '';
-  var data = '';
+  var data;
 
   @override
   Widget build(BuildContext context) {
@@ -124,19 +124,25 @@ class _AddInfoPageContentState extends State<AddInfoPageContent> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Data',
-                      fillColor: Colors.white,
-                      filled: true,
-                    ),
-                    onChanged: (newValue) {
-                      setState(
-                        () {
-                          data = newValue;
-                        },
+                  ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.brown),
+                    onPressed: () async {
+                      final calendar = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now().add(
+                          const Duration(days: -360),
+                        ),
+                        lastDate: DateTime.now().add(
+                          const Duration(days: 365),
+                        ),
                       );
+                      setState(() {
+                        data = calendar?.toIso8601String();
+                      });
                     },
+                    child: Text(data ?? 'Wybierz datę'),
                   ),
                   const SizedBox(
                     height: 15,
@@ -145,7 +151,7 @@ class _AddInfoPageContentState extends State<AddInfoPageContent> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.brown,
                     ),
-                    onPressed: catName.isEmpty || data.isEmpty
+                    onPressed: catName.isEmpty || data == null
                         ? null
                         : () {
                             context.read<AddInfoCubit>().add(
