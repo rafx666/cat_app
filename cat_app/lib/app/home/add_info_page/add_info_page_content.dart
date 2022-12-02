@@ -131,6 +131,24 @@ class _AddInfoPageContentState extends State<AddInfoPageContent> {
                         ElevatedButton.styleFrom(backgroundColor: Colors.brown),
                     onPressed: () async {
                       final selectedDate = await showDatePicker(
+                        builder: (context, child) {
+                          return Theme(
+                            data: Theme.of(context).copyWith(
+                              colorScheme: const ColorScheme.light(
+                                primary: Colors.brown,
+                                onPrimary: Colors.white,
+                              ),
+                              textButtonTheme: TextButtonThemeData(
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      Colors.brown, // button text color
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
+                        locale: const Locale("pl", "PL"),
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate:
