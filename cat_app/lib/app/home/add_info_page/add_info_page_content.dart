@@ -14,12 +14,12 @@ class AddInfoPageContent extends StatefulWidget {
 }
 
 class _AddInfoPageContentState extends State<AddInfoPageContent> {
-  var catName = '';
-  var catFood = '';
-  var vet = '';
-  var age = '';
-  var others = '';
-  var data = '';
+  String catName = '';
+  String catFood = '';
+  String vet = '';
+  String age = '';
+  String others = '';
+  String data = '';
 
   @override
   Widget build(BuildContext context) {

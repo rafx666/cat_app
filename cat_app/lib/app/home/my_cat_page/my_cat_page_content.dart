@@ -18,12 +18,13 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
       create: (context) => MyCatPageCubit()..start(),
       child: BlocBuilder<MyCatPageCubit, MyCatPageState>(
         builder: (context, state) {
+          final catModels = state.cats;
           if (state.errorMessage.isNotEmpty) {
             return Center(
                 child: Text('Something went wrong: ${state.errorMessage}'));
           }
-          if (state.isLoading == true) {
-            return const Center(child: CircularProgressIndicator());
+          if (catModels.isEmpty) {
+            return Center(child: Text(state.cats.isEmpty.toString()));
           }
           return Container(
             decoration: const BoxDecoration(
@@ -34,11 +35,11 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
             ),
             child: ListView(
               children: [
-                for (final document in state.documents) ...[
+                for (final catModel in catModels) ...[
                   Dismissible(
-                    key: ValueKey(document.id),
+                    key: ValueKey(catModel.id),
                     onDismissed: (_) {
-                      context.read<MyCatPageCubit>().delete(document.id);
+                      context.read<MyCatPageCubit>().delete(catModel.id);
                     },
                     child: Container(
                       margin: const EdgeInsets.all(10),
@@ -54,7 +55,7 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  document['cat_name'],
+                                  catModel.catName,
                                   style: const TextStyle(
                                       fontSize: 22, color: Colors.white),
                                 ),
@@ -63,50 +64,48 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
                             const SizedBox(
                               height: 5,
                             ),
-                            if (document['age'].toString().isEmpty == false)
+                            if (catModel.catAge.isEmpty == false)
                               Text(
-                                'Wiek: ${document['age']}',
+                                'Wiek: ${catModel.catAge}',
                                 style: const TextStyle(
                                     fontSize: 16, color: Colors.white),
                               ),
-                            if (document['age'].toString().isEmpty == false)
+                            if (catModel.catAge.isEmpty == false)
                               const SizedBox(
                                 height: 5,
                               ),
-                            if (document['cat_food'].toString().isEmpty ==
-                                false)
+                            if (catModel.catFood.isEmpty == false)
                               Text(
-                                'Co jadł: ${document['cat_food']}',
+                                'Co jadł: ${catModel.catFood}',
                                 style: const TextStyle(
                                     fontSize: 16, color: Colors.white),
                               ),
-                            if (document['cat_food'].toString().isEmpty ==
-                                false)
+                            if (catModel.catFood.isEmpty == false)
                               const SizedBox(
                                 height: 5,
                               ),
-                            if (document['vet'].toString().isEmpty == false)
+                            if (catModel.vet.isEmpty == false)
                               Text(
-                                'Wet: ${document['vet']}',
+                                'Wet: ${catModel.vet}',
                                 style: const TextStyle(
                                     fontSize: 16, color: Colors.white),
                               ),
-                            if (document['vet'].toString().isEmpty == false)
+                            if (catModel.vet.isEmpty == false)
                               const SizedBox(
                                 height: 5,
                               ),
-                            if (document['others'].toString().isEmpty == false)
+                            if (catModel.others.isEmpty == false)
                               Text(
-                                'Uwagi: ${document['others']}',
+                                'Uwagi: ${catModel.others}',
                                 style: const TextStyle(
                                     fontSize: 16, color: Colors.white),
                               ),
-                            if (document['others'].toString().isEmpty == false)
+                            if (catModel.others.isEmpty == false)
                               const SizedBox(
                                 height: 5,
                               ),
                             Text(
-                              'Data: ${document['data']}',
+                              'Data: ${catModel.catDate}',
                               style: const TextStyle(
                                   fontSize: 16, color: Colors.white),
                             ),

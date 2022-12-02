@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:cat_app/models/cat_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
@@ -9,10 +10,9 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
   MyCatPageCubit()
       : super(
           const MyCatPageState(
-            documents: [],
+            cats: [],
             isLoading: false,
             errorMessage: '',
-            collection1: null,
           ),
         );
 
@@ -25,10 +25,9 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
   Future<void> start() async {
     emit(
       const MyCatPageState(
-        documents: [],
+        cats: [],
         isLoading: true,
         errorMessage: '',
-        collection1: null,
       ),
     );
 
@@ -36,20 +35,29 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
         .collection('cat_info')
         .orderBy('data', descending: true)
         .snapshots()
-        .listen((data) {
+        .listen((pliki) {
+      final catModels = pliki.docs.map((doc) {
+        return CatModel(
+          id: doc.id,
+          catName: doc['cat_name'],
+          catAge: doc['age'].toString(),
+          catFood: doc['cat_food'],
+          vet: doc['vet'],
+          others: doc['others'],
+          catDate: doc['data'],
+        );
+      }).toList();
       emit(MyCatPageState(
-        documents: data.docs,
+        cats: catModels,
         isLoading: false,
         errorMessage: '',
-        collection1: null,
       ));
     })
       ..onError((error) {
         emit(MyCatPageState(
-          documents: const [],
+          cats: const [],
           isLoading: false,
           errorMessage: error.toString(),
-          collection1: null,
         ));
       });
   }

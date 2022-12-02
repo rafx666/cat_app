@@ -2,14 +2,12 @@ part of 'my_cat_page_cubit.dart';
 
 @immutable
 class MyCatPageState {
-  final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents;
-  final CollectionReference<Map<String, dynamic>>? collection1;
+  const MyCatPageState({
+    this.cats = const [],
+    this.isLoading = false,
+    this.errorMessage = '',
+  });
+  final List<CatModel> cats;
   final bool isLoading;
   final String errorMessage;
-
-  const MyCatPageState(
-      {required this.documents,
-      required this.isLoading,
-      required this.errorMessage,
-      required this.collection1});
 }
