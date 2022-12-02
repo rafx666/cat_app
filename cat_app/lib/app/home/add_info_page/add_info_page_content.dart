@@ -1,6 +1,8 @@
 import 'package:cat_app/app/home/add_info_page/cubit/add_info_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class AddInfoPageContent extends StatefulWidget {
   const AddInfoPageContent({
@@ -124,19 +126,35 @@ class _AddInfoPageContentState extends State<AddInfoPageContent> {
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Data',
-                      fillColor: Colors.white,
-                      filled: true,
-                    ),
-                    onChanged: (newValue) {
-                      setState(
-                        () {
-                          data = newValue;
-                        },
+                  ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.brown),
+                    onPressed: () async {
+                      final selectedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate:
+                            DateTime.now().add(const Duration(days: 365 * -5)),
+                        lastDate: DateTime.now().add(
+                          const Duration(days: 365 * 1),
+                        ),
                       );
+                      initializeDateFormatting('pl');
+                      String showDate() {
+                        if (selectedDate != null) {
+                          return DateFormat.yMd('pl').format(selectedDate);
+                        } else {
+                          return '';
+                        }
+                      }
+
+                      setState(() {
+                        data = showDate();
+                      });
                     },
+                    child: data.isNotEmpty
+                        ? Text(data)
+                        : const Text('Wybierz datę'),
                   ),
                   const SizedBox(
                     height: 15,
