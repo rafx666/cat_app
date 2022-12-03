@@ -1,13 +1,15 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cat_app/repositories/cats_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'my_account_state.dart';
 
 class MyAccountCubit extends Cubit<MyAccountState> {
-  MyAccountCubit() : super(MyAccountState());
+  MyAccountCubit(this._catsRepository) : super(MyAccountState());
+
+  final CatsRepository _catsRepository;
 
   Future<void> signOut() async {
-    FirebaseAuth.instance.signOut();
+    await _catsRepository.signOut();
   }
 }

@@ -1,27 +1,29 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cat_app/repositories/cats_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'add_info_state.dart';
 
 class AddInfoCubit extends Cubit<AddInfoState> {
-  AddInfoCubit() : super(AddInfoState());
+  AddInfoCubit(this._catsRepository) : super(AddInfoState());
 
-  Future<void> add({
-    required catName,
-    required age,
-    required catFood,
-    required vet,
-    required others,
-    required data,
-  }) async {
-    FirebaseFirestore.instance.collection('cat_info').add({
-      'cat_name': catName,
-      'age': age,
-      'cat_food': catFood,
-      'vet': vet,
-      'others': others,
-      'data': data,
-    });
+  final CatsRepository _catsRepository;
+
+  Future<void> add(
+    String catName,
+    String age,
+    String catFood,
+    String vet,
+    String others,
+    String data,
+  ) {
+    return _catsRepository.add(
+      catName: catName,
+      age: age,
+      catFood: catFood,
+      vet: vet,
+      others: others,
+      data: data,
+    );
   }
 }

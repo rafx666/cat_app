@@ -1,5 +1,6 @@
 import 'package:cat_app/app/home/default_page.dart';
 import 'package:cat_app/app/home/my_account_page/cubit/my_account_cubit.dart';
+import 'package:cat_app/repositories/cats_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,7 +15,7 @@ class MyAccountPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MyAccountCubit(),
+      create: (context) => MyAccountCubit(CatsRepository()),
       child: Builder(builder: (context) {
         return Container(
           decoration: const BoxDecoration(

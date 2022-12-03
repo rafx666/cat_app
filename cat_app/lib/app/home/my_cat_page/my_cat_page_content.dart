@@ -1,5 +1,6 @@
 import 'package:cat_app/app/home/my_cat_page/cubit/my_cat_page_cubit.dart';
 import 'package:cat_app/models/cat_model.dart';
+import 'package:cat_app/repositories/cats_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,7 @@ class _MyCatPageContentState extends State<MyCatPageContent> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MyCatPageCubit()..start(),
+      create: (context) => MyCatPageCubit(CatsRepository())..start(),
       child: BlocBuilder<MyCatPageCubit, MyCatPageState>(
         builder: (context, state) {
           final catModels = state.cats;

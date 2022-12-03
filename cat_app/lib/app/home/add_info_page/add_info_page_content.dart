@@ -1,4 +1,5 @@
 import 'package:cat_app/app/home/add_info_page/cubit/add_info_cubit.dart';
+import 'package:cat_app/repositories/cats_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -26,7 +27,7 @@ class _AddInfoPageContentState extends State<AddInfoPageContent> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AddInfoCubit(),
+      create: (context) => AddInfoCubit(CatsRepository()),
       child: Builder(builder: (context) {
         return Container(
           decoration: const BoxDecoration(
@@ -185,12 +186,12 @@ class _AddInfoPageContentState extends State<AddInfoPageContent> {
                         ? null
                         : () {
                             context.read<AddInfoCubit>().add(
-                                  catName: catName,
-                                  age: age,
-                                  catFood: catFood,
-                                  vet: vet,
-                                  others: others,
-                                  data: data,
+                                  catName,
+                                  age,
+                                  catFood,
+                                  vet,
+                                  others,
+                                  data,
                                 );
                             widget.onSave();
                           },

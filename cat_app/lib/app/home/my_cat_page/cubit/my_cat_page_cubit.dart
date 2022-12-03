@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cat_app/models/cat_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cat_app/repositories/cats_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'my_cat_page_state.dart';
 
 class MyCatPageCubit extends Cubit<MyCatPageState> {
-  MyCatPageCubit()
+  MyCatPageCubit(this._catsRepository)
       : super(
           const MyCatPageState(
             cats: [],
@@ -17,9 +17,10 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
         );
 
   StreamSubscription? _streamSubscription;
+  final CatsRepository _catsRepository;
 
   Future<void> delete(documentID) async {
-    FirebaseFirestore.instance.collection("cat_info").doc(documentID).delete();
+    await _catsRepository.delete(id: documentID);
   }
 
   Future<void> start() async {
@@ -31,24 +32,9 @@ class MyCatPageCubit extends Cubit<MyCatPageState> {
       ),
     );
 
-    _streamSubscription = FirebaseFirestore.instance
-        .collection('cat_info')
-        .orderBy('data', descending: true)
-        .snapshots()
-        .listen((pliki) {
-      final catModels = pliki.docs.map((doc) {
-        return CatModel(
-          id: doc.id,
-          catName: doc['cat_name'],
-          catAge: doc['age'].toString(),
-          catFood: doc['cat_food'],
-          vet: doc['vet'],
-          others: doc['others'],
-          catDate: doc['data'],
-        );
-      }).toList();
+    _streamSubscription = _catsRepository.getCatStream().listen((catDocs) {
       emit(MyCatPageState(
-        cats: catModels,
+        cats: catDocs,
         isLoading: false,
         errorMessage: '',
       ));
